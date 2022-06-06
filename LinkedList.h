@@ -1,0 +1,8 @@
+//
+// Created by ki11errabbit on 6/6/22.
+//
+
+#ifndef LAB_03_LINKED_LIST_LINKEDLIST_H
+#define LAB_03_LINKED_LIST_LINKEDLIST_H
+
+#endif //LAB_03_LINKED_LIST_LINKEDLIST_H
