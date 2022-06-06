@@ -30,6 +30,7 @@ void LinkedList_remove_value(const char* value);
 void LinkedList_clear(void);
 void LinkedList_reverse(void);
 size_t LinkedList_size(void);
+void LinkedList_output_list(void);
 char* LinkedList_toString(void);
 
 

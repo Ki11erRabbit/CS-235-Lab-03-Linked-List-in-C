@@ -18,15 +18,16 @@ void LinkedList_clear(void) {
         Node* currNode = head;
         while (currNode != NULL) {
             Node* nextNode = currNode->next;
+            free(currNode->data);
             free(currNode);
             currNode = nextNode;
         }
         head = NULL;
+        tail = NULL;
     }
     else {
         printf("There are no nodes");
     }
-
 }
 
 void LinkedList_push_front(const char* value) {
@@ -42,6 +43,7 @@ void LinkedList_pop_front(void) {
         return;
     }
     Node* newHead = head->next;
+    free(head->data);
     free(head);
     head = newHead;
 }
@@ -51,6 +53,7 @@ void LinkedList_pop_back(void) {
         return;
     }
     Node* newTail = tail->previous;
+    free(tail->data);
     free(tail);
     tail = newTail;
 }
@@ -94,6 +97,7 @@ void LinkedList_remove_value(const char* value) {
             else if (strcmp(currNode->next->data, value)) {
                 Node* nextNode = currNode->next->next;
                 Node* previousNode = currNode;
+                free(currNode->next->data);
                 free(currNode->next);
                 previousNode->next = nextNode;
                 nextNode->previous = previousNode;
@@ -103,6 +107,7 @@ void LinkedList_remove_value(const char* value) {
             }
         }
         if (strcmp(head->data, value)) {
+            free(head->data);
             free(head);
             head = NULL;
         }
@@ -110,12 +115,22 @@ void LinkedList_remove_value(const char* value) {
 }
 
 void LinkedList_reverse(void) {
-    Node* currNode = head;
+
     if (head == NULL) {
         printf("Error! Empty Linked List!");
         return;
     }
+    Node* currNode = head;
+    while (currNode != NULL) {
+        Node* temp = currNode->next;
+        currNode->next = currNode->previous;
+        currNode->previous = temp;
 
+        currNode = temp;
+    }
+    Node* temp = tail;
+    tail = head;
+    head = tail;
 }
 
 size_t LinkedList_size(void) {
@@ -127,4 +142,20 @@ size_t LinkedList_size(void) {
     }
     return count;
 }
+
+void LinkedList_output_list(void) {
+    if (head->next != NULL) {
+        Node* currNode = head;
+        while (currNode != NULL) {
+            Node* nextNode = currNode->next;
+            printf("%s ", currNode->data);
+            currNode = nextNode;
+        }
+        printf("\n");
+    }
+    else {
+        printf("There are no nodes");
+    }
+}
+
 char* LinkedList_toString(void);
