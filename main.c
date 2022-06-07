@@ -18,16 +18,16 @@ int main(int argc, char** argv) {
 
 
     char* buff = NULL;
-    size_t buffSize = 100;
+    size_t* buffSize = 0;
     while (getline(&buff, &buffSize, readFile)) {
         buff = strtok(buff, "\n");//trims newline character
-
+        //printf("%d", buffSize);
         //printf("BUFFFER: %s\n", buff);
         if (buff != NULL) {
             char* token = strtok(buff, " ");
             //char* command = strdup(token);
 
-            if (token[0] == 'I') {
+            if (token[0] == 'I') {//Insert
                 printf("Insert ");
                 token = strtok(NULL, " ");
 
@@ -39,24 +39,40 @@ int main(int argc, char** argv) {
                 }
                 printf("\n");
             }
-            else if (token[0] == 'P') {
+            else if (token[0] == 'P') {//PrintList
                 printf ("PrintList ");
                 LinkedList_output_list();
 
             }
-            else if (token[0] == 'C') {
+            else if (token[0] == 'C') {//Clear
                 printf("Clear ");//TODO: change to match error cases
                 LinkedList_clear();
                 printf("\n");
+            }
+            else if (token[0] == 'S') {//Size
+                printf("Size %d\n", LinkedList_size());
+            }
+            else if (token[0] == 'E') {//Empty
+                printf("Empty ");
+                if (LinkedList_is_empty()) {
+                    printf("true\n");
+                }
+                else {
+                    printf("false\n");
+                }
+            }
+            else {
+                break;
             }
 
         }
         else {
             break;
         }
-
+        free(buff);
+        buff = NULL;
     }
-    free(buff);
+
     LinkedList_clear();
 
 
