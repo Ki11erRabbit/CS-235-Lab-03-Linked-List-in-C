@@ -4,8 +4,14 @@
 
 #include "LinkedList.h"
 
-Node* head = NULL;
-Node* tail = NULL;
+
+Linked_List* LinkedList_Linked_List() {
+    Linked_List* newList;
+    newList = malloc(sizeof(Linked_List));
+    newList->head = NULL;
+    newList->tail = NULL;
+    return newList;
+}
 
 Node* LinkedList_initializeNode(const char* data, Node* next, Node* previous) {
     Node* tempNode;
@@ -16,9 +22,9 @@ Node* LinkedList_initializeNode(const char* data, Node* next, Node* previous) {
     return tempNode;
 }
 
-void LinkedList_clear(void) {
-    if (head != NULL) {
-        Node* currNode = head;
+void LinkedList_clear(Linked_List* this) {
+    if (this->head != NULL) {
+        Node* currNode = this->head;
         while (currNode != NULL) {
             Node* nextNode = currNode->next;
             free(currNode->data);
@@ -26,8 +32,8 @@ void LinkedList_clear(void) {
             free(currNode);
             currNode = nextNode;
         }
-        head = NULL;
-        tail = NULL;
+        this->head = NULL;
+        this->tail = NULL;
         printf("Ok");
     }
     else {
@@ -35,99 +41,99 @@ void LinkedList_clear(void) {
     }
 }
 
-void LinkedList_push_front(const char* value) {
-    Node* newNode = LinkedList_initializeNode(value, head, NULL);
+void LinkedList_push_front(Linked_List* this, const char* value) {
+    Node* newNode = LinkedList_initializeNode(value, this->head, NULL);
 
-    if (LinkedList_size() == 0) {
-        tail = newNode;
+    if (LinkedList_size(this) == 0) {
+        this->tail = newNode;
     }
     else {
-        head->previous = newNode;
+        this->head->previous = newNode;
     }
-    head = newNode;
+    this->head = newNode;
 }
-void LinkedList_push_back(const char* value) {
-    Node* newNode = LinkedList_initializeNode(value, NULL, tail);
-    if (LinkedList_size() == 0) {
-        head = newNode;
+void LinkedList_push_back(Linked_List* this, const char* value) {
+    Node* newNode = LinkedList_initializeNode(value, NULL, this->tail);
+    if (LinkedList_size(this) == 0) {
+        this->head = newNode;
     }
     else {
-        tail->next = newNode;
+        this->tail->next = newNode;
     }
-    tail = newNode;
+    this->tail = newNode;
 }
 
-void LinkedList_pop_front(void) {
-    if (head == NULL) {
+void LinkedList_pop_front(Linked_List* this) {
+    if (this->head == NULL) {
         printf("Empty Linked List!");
         return;
     }
-    Node* newHead = head->next;
+    Node* newHead = this->head->next;
     if (newHead == NULL) {
-        tail=NULL;
+        this->tail=NULL;
     }
     else {
         newHead->previous = NULL;
     }
 
-    free(head->data);
-    head->data = NULL;
-    free(head);
-    head = newHead;
+    free(this->head->data);
+    this->head->data = NULL;
+    free(this->head);
+    this->head = newHead;
 }
-void LinkedList_pop_back(void) {
-    if (tail == NULL) {
+void LinkedList_pop_back(Linked_List* this) {
+    if (this->tail == NULL) {
         printf("Empty Linked List!");
         return;
     }
-    Node* newTail = tail->previous;
+    Node* newTail = this->tail->previous;
     if (newTail == NULL) {
-        head = NULL;
+        this->head = NULL;
     }
     else {
         newTail->next = NULL;
     }
-    free(tail->data);
-    tail->data = NULL;
-    free(tail);
-    tail = newTail;
+    free(this->tail->data);
+    this->tail->data = NULL;
+    free(this->tail);
+    this->tail = newTail;
 }
 
-char* LinkedList_front(void) {
-    if (head == NULL) {
+char* LinkedList_front(Linked_List* this) {
+    if (this->head == NULL) {
         //printf("Error! Empty Linked List!");
         return "Empty!";
     } else {
-        return head->data;
+        return this->head->data;
     }
 }
-char* LinkedList_back(void) {
-    if (tail == NULL) {
+char* LinkedList_back(Linked_List* this) {
+    if (this->tail == NULL) {
         //printf("Error! Empty Linked List!");
         return "Empty!";
     } else {
-        return tail->data;
+        return this->tail->data;
     }
 }
 
-int LinkedList_is_empty(void) {
-    if (head == NULL && tail == NULL) {
+int LinkedList_is_empty(Linked_List* this) {
+    if (this->head == NULL && this->tail == NULL) {
         return 1;
     }
     else {
         return 0;
     }
 }
-void LinkedList_remove_value(const char* value) {
-    if (head == NULL) {
+void LinkedList_remove_value(Linked_List* this, const char* value) {
+    if (this->head == NULL) {
         printf("Error! Linked List Empty!");
     }
     else {
-        Node* currNode = head;
+        Node* currNode = this->head;
         while (currNode != NULL) {
-            if (strcmp(currNode->data,value) == 0 && currNode == head) {
-                LinkedList_pop_front();
-                currNode = head;
+            if (strcmp(currNode->data,value) == 0 && currNode == this->head) {
+                LinkedList_pop_front(this);
+                currNode = this->head;
             }
             else if (strcmp(currNode->data, value) == 0) {
                 Node* nextNode = currNode->next;
@@ -142,7 +148,7 @@ void LinkedList_remove_value(const char* value) {
                 }
                 else {
                     currNode = NULL;
-                    tail = previousNode;
+                    this->tail = previousNode;
                 }
 
             }
@@ -150,20 +156,20 @@ void LinkedList_remove_value(const char* value) {
                 currNode = currNode->next;
             }
         }
-        if (LinkedList_size() == 0) {
-            head = NULL;
-            tail = NULL;
+        if (LinkedList_size(this) == 0) {
+            this->head = NULL;
+            this->tail = NULL;
         }
     }
 }
 
-void LinkedList_reverse(void) {
+void LinkedList_reverse(Linked_List* this) {
 
-    if (head == NULL) {
+    if (this->head == NULL) {
         printf("Error! Empty Linked List!\n");
         return;
     }
-    Node* currNode = head;
+    Node* currNode = this->head;
     while (currNode != NULL) {
         Node* temp = currNode->next;
         currNode->next = currNode->previous;
@@ -171,13 +177,13 @@ void LinkedList_reverse(void) {
 
         currNode = temp;
     }
-    Node* temp = tail;
-    tail = head;
-    head = temp;
+    Node* temp = this->tail;
+    this->tail = this->head;
+    this->head = temp;
 }
 
-size_t LinkedList_size(void) {
-    Node* currNode = head;
+size_t LinkedList_size(Linked_List* this) {
+    Node* currNode = this->head;
     size_t count = 0;
     while (currNode != NULL) {
         count++;
@@ -186,9 +192,9 @@ size_t LinkedList_size(void) {
     return count;
 }
 
-void LinkedList_output_list(void) {
-    if (head != NULL) {
-        Node* currNode = head;
+void LinkedList_output_list(Linked_List* this) {
+    if (this->head != NULL) {
+        Node* currNode = this->head;
         while (currNode != NULL) {
             Node* nextNode = currNode->next;
             printf("%s ", currNode->data);
@@ -201,4 +207,4 @@ void LinkedList_output_list(void) {
     }
 }
 
-char* LinkedList_toString(void);
+char* LinkedList_toString(Linked_List* this);

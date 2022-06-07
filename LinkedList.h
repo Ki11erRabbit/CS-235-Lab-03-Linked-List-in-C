@@ -15,21 +15,26 @@ typedef struct Node{
     struct Node* previous;
 } Node;
 
+typedef struct Linked_List {
+    Node* head;
+    Node* tail;
+} Linked_List;
 
+Linked_List* LinkedList_Linked_List();
 Node* LinkedList_initializeNode(const char* data, Node* next, Node* previous);
-void LinkedList_push_front(const char* value);
-void LinkedList_push_back(const char* value);
-void LinkedList_pop_front(void);
-void LinkedList_pop_back(void);
-char* LinkedList_front(void);
-char* LinkedList_back(void);
-int LinkedList_is_empty(void);
-void LinkedList_remove_value(const char* value);
-void LinkedList_clear(void);
-void LinkedList_reverse(void);
-size_t LinkedList_size(void);
-void LinkedList_output_list(void);
-char* LinkedList_toString(void);
+void LinkedList_push_front(Linked_List* this,const char* value);
+void LinkedList_push_back(Linked_List* this,const char* value);
+void LinkedList_pop_front(Linked_List* this);
+void LinkedList_pop_back(Linked_List* this);
+char* LinkedList_front(Linked_List* this);
+char* LinkedList_back(Linked_List* this);
+int LinkedList_is_empty(Linked_List* this);
+void LinkedList_remove_value(Linked_List* this,const char* value);
+void LinkedList_clear(Linked_List* this);
+void LinkedList_reverse(Linked_List* this);
+size_t LinkedList_size(Linked_List* this);
+void LinkedList_output_list(Linked_List* this);
+char* LinkedList_toString(Linked_List* this);
 
 
 
