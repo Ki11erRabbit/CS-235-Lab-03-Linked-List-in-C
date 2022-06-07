@@ -81,6 +81,26 @@ int main(int argc, char** argv) {
                 printf("Reverse OK\n");
                 LinkedList_reverse();
             }
+            else if (strcmp(token,"Append") == 0) {
+                printf("Append ");
+                token = strtok(NULL, " ");
+
+                while (token != NULL) {
+                    LinkedList_push_back(strdup(token));
+                    printf("%s ", token);
+                    token = strtok(NULL, " ");
+                }
+                printf("\n");
+            }
+            else if (strcmp(token, "Drop") == 0) {
+                printf("Drop ");
+                LinkedList_pop_back();
+                printf("\n");
+            }
+            else if (strcmp(token, "Last") == 0) {
+                printf("Last ");
+                printf("%s\n", LinkedList_back());
+            }
             else {
                 break;
             }

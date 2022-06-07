@@ -22,6 +22,7 @@ void LinkedList_clear(void) {
         while (currNode != NULL) {
             Node* nextNode = currNode->next;
             free(currNode->data);
+            currNode->data = NULL;
             free(currNode);
             currNode = nextNode;
         }
@@ -47,7 +48,7 @@ void LinkedList_push_front(const char* value) {
 }
 void LinkedList_push_back(const char* value) {
     Node* newNode = LinkedList_initializeNode(value, NULL, tail);
-    if (LinkedList_size()) {
+    if (LinkedList_size() == 0) {
         head = newNode;
     }
     else {
@@ -62,8 +63,15 @@ void LinkedList_pop_front(void) {
         return;
     }
     Node* newHead = head->next;
-    newHead->previous = NULL;
+    if (newHead == NULL) {
+        tail=NULL;
+    }
+    else {
+        newHead->previous = NULL;
+    }
+
     free(head->data);
+    head->data = NULL;
     free(head);
     head = newHead;
 }
@@ -73,8 +81,14 @@ void LinkedList_pop_back(void) {
         return;
     }
     Node* newTail = tail->previous;
-    newTail->next = NULL;
+    if (newTail == NULL) {
+        head = NULL;
+    }
+    else {
+        newTail->next = NULL;
+    }
     free(tail->data);
+    tail->data = NULL;
     free(tail);
     tail = newTail;
 }
@@ -119,6 +133,7 @@ void LinkedList_remove_value(const char* value) {
                 Node* nextNode = currNode->next;
                 Node* previousNode = currNode->previous;
                 free(currNode->data);
+                currNode->data = NULL;
                 free(currNode);
                 currNode = nextNode;
                 previousNode->next = nextNode;
