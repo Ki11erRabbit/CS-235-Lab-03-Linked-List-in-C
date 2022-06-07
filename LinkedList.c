@@ -35,10 +35,21 @@ void LinkedList_clear(void) {
 }
 
 void LinkedList_push_front(const char* value) {
-    head = LinkedList_initializeNode(value, head, NULL);
+    Node* newNode = LinkedList_initializeNode(value, head, NULL);
+
+    if (LinkedList_size() == 0) {
+        tail = newNode;
+    }
+    else {
+        head->previous = newNode;
+    }
+    head = newNode;
 }
 void LinkedList_push_back(const char* value) {
     tail = LinkedList_initializeNode(value, NULL, tail);
+    if (LinkedList_size()) {
+        head = tail;
+    }
 }
 
 void LinkedList_pop_front(void) {
@@ -103,17 +114,24 @@ void LinkedList_remove_value(const char* value) {
                 Node* previousNode = currNode->previous;
                 free(currNode->data);
                 free(currNode);
+                currNode = nextNode;
                 previousNode->next = nextNode;
-                nextNode->previous = previousNode;
+                if (nextNode != NULL) {
+                    nextNode->previous = previousNode;
+                }
+                else {
+                    currNode = NULL;
+                    tail = previousNode;
+                }
+
             }
             else {
                 currNode = currNode->next;
             }
         }
-        if (strcmp(head->data, value) == 0) {
-            free(head->data);
-            free(head);
+        if (LinkedList_size() == 0) {
             head = NULL;
+            tail = NULL;
         }
     }
 }
