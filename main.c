@@ -61,6 +61,22 @@ int main(int argc, char** argv) {
                     printf("false\n");
                 }
             }
+            else if (token[0] == 'F') {//First
+                printf("First ");
+                printf("%s\n",LinkedList_front());
+            }
+            else if (token[0] == 'D') {//Delete
+                printf("Delete ");
+                LinkedList_pop_front();
+                printf("\n");
+            }
+            else if (token[0] == 'R') {//Remove
+                printf("Remove ");
+                token = strtok(NULL, " ");
+                token = strtok(token, "\n");
+                printf("%s\n",token);
+                LinkedList_remove_value(token);
+            }
             else {
                 break;
             }

@@ -88,21 +88,21 @@ int LinkedList_is_empty(void) {
     }
 }
 void LinkedList_remove_value(const char* value) {
-    if (head == NULL || tail == NULL) {
+    if (head == NULL) {
         printf("Error! Linked List Empty!");
     }
     else {
         Node* currNode = head;
-        while (currNode->next != NULL) {
-            if (strcmp(currNode->data,value) && currNode == head) {
+        while (currNode != NULL) {
+            if (strcmp(currNode->data,value) == 0 && currNode == head) {
                 LinkedList_pop_front();
                 currNode = head;
             }
-            else if (strcmp(currNode->next->data, value)) {
-                Node* nextNode = currNode->next->next;
-                Node* previousNode = currNode;
-                free(currNode->next->data);
-                free(currNode->next);
+            else if (strcmp(currNode->data, value) == 0) {
+                Node* nextNode = currNode->next;
+                Node* previousNode = currNode->previous;
+                free(currNode->data);
+                free(currNode);
                 previousNode->next = nextNode;
                 nextNode->previous = previousNode;
             }
@@ -110,7 +110,7 @@ void LinkedList_remove_value(const char* value) {
                 currNode = currNode->next;
             }
         }
-        if (strcmp(head->data, value)) {
+        if (strcmp(head->data, value) == 0) {
             free(head->data);
             free(head);
             head = NULL;
