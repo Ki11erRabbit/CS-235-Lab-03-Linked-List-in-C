@@ -62,6 +62,7 @@ void LinkedList_pop_front(void) {
         return;
     }
     Node* newHead = head->next;
+    newHead->previous = NULL;
     free(head->data);
     free(head);
     head = newHead;
@@ -72,6 +73,7 @@ void LinkedList_pop_back(void) {
         return;
     }
     Node* newTail = tail->previous;
+    newTail->next = NULL;
     free(tail->data);
     free(tail);
     tail = newTail;
@@ -79,16 +81,16 @@ void LinkedList_pop_back(void) {
 
 char* LinkedList_front(void) {
     if (head == NULL) {
-        printf("Error! Empty Linked List!");
-        return strdup("Error");
+        //printf("Error! Empty Linked List!");
+        return "Empty!";
     } else {
         return head->data;
     }
 }
 char* LinkedList_back(void) {
     if (tail == NULL) {
-        printf("Error! Empty Linked List!");
-        return strdup("Error");
+        //printf("Error! Empty Linked List!");
+        return "Empty!";
     } else {
         return tail->data;
     }
@@ -143,7 +145,7 @@ void LinkedList_remove_value(const char* value) {
 void LinkedList_reverse(void) {
 
     if (head == NULL) {
-        printf("Error! Empty Linked List!");
+        printf("Error! Empty Linked List!\n");
         return;
     }
     Node* currNode = head;

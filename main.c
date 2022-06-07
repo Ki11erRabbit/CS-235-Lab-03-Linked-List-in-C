@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 
 
     char* buff = NULL;
-    size_t* buffSize = 0;
+    size_t buffSize = 0;
     while (getline(&buff, &buffSize, readFile)) {
         buff = strtok(buff, "\n");//trims newline character
         //printf("%d", buffSize);
@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
             char* token = strtok(buff, " ");
             //char* command = strdup(token);
 
-            if (token[0] == 'I') {//Insert
+            if (strcmp(token,"Insert") == 0) {//Insert
                 printf("Insert ");
                 token = strtok(NULL, " ");
 
@@ -39,20 +39,20 @@ int main(int argc, char** argv) {
                 }
                 printf("\n");
             }
-            else if (token[0] == 'P') {//PrintList
+            else if (strcmp(token,"PrintList") == 0) {//PrintList
                 printf ("PrintList ");
                 LinkedList_output_list();
 
             }
-            else if (token[0] == 'C') {//Clear
+            else if (strcmp(token,"Clear") == 0) {//Clear
                 printf("Clear ");//TODO: change to match error cases
                 LinkedList_clear();
                 printf("\n");
             }
-            else if (token[0] == 'S') {//Size
+            else if (strcmp(token,"Size") == 0) {//Size
                 printf("Size %d\n", LinkedList_size());
             }
-            else if (token[0] == 'E') {//Empty
+            else if (strcmp(token,"Empty") == 0) {//Empty
                 printf("Empty ");
                 if (LinkedList_is_empty()) {
                     printf("true\n");
@@ -61,21 +61,25 @@ int main(int argc, char** argv) {
                     printf("false\n");
                 }
             }
-            else if (token[0] == 'F') {//First
+            else if (strcmp(token,"First") == 0) {//First
                 printf("First ");
                 printf("%s\n",LinkedList_front());
             }
-            else if (token[0] == 'D') {//Delete
+            else if (strcmp(token,"Delete") == 0) {//Delete
                 printf("Delete ");
                 LinkedList_pop_front();
                 printf("\n");
             }
-            else if (token[0] == 'R') {//Remove
+            else if (strcmp(token,"Remove") == 0) {//Remove
                 printf("Remove ");
                 token = strtok(NULL, " ");
                 token = strtok(token, "\n");
                 printf("%s\n",token);
                 LinkedList_remove_value(token);
+            }
+            else if (strcmp(token,"Reverse") == 0) {
+                printf("Reverse OK\n");
+                LinkedList_reverse();
             }
             else {
                 break;
