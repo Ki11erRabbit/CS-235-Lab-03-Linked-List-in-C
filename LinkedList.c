@@ -4,17 +4,20 @@
 
 #include "LinkedList.h"
 
+Node* head = NULL;
+Node* tail = NULL;
+
 Node* LinkedList_initializeNode(const char* data, Node* next, Node* previous) {
     Node* tempNode;
     tempNode = malloc(sizeof(Node));
-    *tempNode->data = *data;
+    tempNode->data = data;
     tempNode->next = next;
     tempNode->previous = previous;
     return tempNode;
 }
 
 void LinkedList_clear(void) {
-    if (head->next != NULL) {
+    if (head != NULL) {
         Node* currNode = head;
         while (currNode != NULL) {
             Node* nextNode = currNode->next;
@@ -24,6 +27,7 @@ void LinkedList_clear(void) {
         }
         head = NULL;
         tail = NULL;
+        printf("Ok");
     }
     else {
         printf("There are no nodes");
@@ -130,7 +134,7 @@ void LinkedList_reverse(void) {
     }
     Node* temp = tail;
     tail = head;
-    head = tail;
+    head = temp;
 }
 
 size_t LinkedList_size(void) {
@@ -144,7 +148,7 @@ size_t LinkedList_size(void) {
 }
 
 void LinkedList_output_list(void) {
-    if (head->next != NULL) {
+    if (head != NULL) {
         Node* currNode = head;
         while (currNode != NULL) {
             Node* nextNode = currNode->next;
@@ -154,7 +158,7 @@ void LinkedList_output_list(void) {
         printf("\n");
     }
     else {
-        printf("There are no nodes");
+        printf("Empty\n");
     }
 }
 

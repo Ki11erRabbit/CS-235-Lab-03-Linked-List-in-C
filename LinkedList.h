@@ -15,8 +15,6 @@ typedef struct Node{
     struct Node* previous;
 } Node;
 
-Node* head = NULL;
-Node* tail = NULL;
 
 Node* LinkedList_initializeNode(const char* data, Node* next, Node* previous);
 void LinkedList_push_front(const char* value);
