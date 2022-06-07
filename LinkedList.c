@@ -46,10 +46,14 @@ void LinkedList_push_front(const char* value) {
     head = newNode;
 }
 void LinkedList_push_back(const char* value) {
-    tail = LinkedList_initializeNode(value, NULL, tail);
+    Node* newNode = LinkedList_initializeNode(value, NULL, tail);
     if (LinkedList_size()) {
-        head = tail;
+        head = newNode;
     }
+    else {
+        tail->next = newNode;
+    }
+    tail = newNode;
 }
 
 void LinkedList_pop_front(void) {
