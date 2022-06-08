@@ -5,7 +5,7 @@
 #include "LinkedList.h"
 
 
-Linked_List* LinkedList_Linked_List() {
+Linked_List* LinkedList_Linked_List() {//Constructor for Linked List object
     Linked_List* newList;
     newList = malloc(sizeof(Linked_List));
     newList->head = NULL;
@@ -13,8 +13,9 @@ Linked_List* LinkedList_Linked_List() {
     return newList;
 }
 
-void LinkedList_Deconstruct(Linked_List* this) {
+void LinkedList_Deconstruct(Linked_List* this) {//Deconstructor for Linked List object
     if (this == NULL) return;//In case the object pointer has not yet been initialized
+
     if (this->head != NULL) {//copied from clear() to not have output;
         Node* currNode = this->head;
         while (currNode != NULL) {
@@ -32,6 +33,7 @@ void LinkedList_Deconstruct(Linked_List* this) {
 
     free(this);
 }
+//copies the data from Linked List this into new Linked List and returns a pointer to it
 Linked_List* LinkedList_Copy(Linked_List* this) {
     Linked_List* newList = NULL;
     newList = malloc(sizeof(Linked_List));
@@ -42,11 +44,9 @@ Linked_List* LinkedList_Copy(Linked_List* this) {
         Node* currNode = this->head;
         while (currNode != NULL) {
             Node* nextNode = currNode->next;
-            //printf("%s ", currNode->data);
             LinkedList_push_back(newList, strdup(currNode->data));
             currNode = nextNode;
         }
-        //printf("\n");
     }
     else {
         printf("Empty\n");
@@ -64,6 +64,7 @@ Node* LinkedList_initializeNode(const char* data, Node* next, Node* previous) {
     return tempNode;
 }
 
+//Clears the passed Linked List and outputs OK if it succeeds
 void LinkedList_clear(Linked_List* this) {
     if (this->head != NULL) {
         Node* currNode = this->head;
@@ -141,7 +142,7 @@ void LinkedList_pop_back(Linked_List* this) {
     this->tail = newTail;
 }
 
-char* LinkedList_front(Linked_List* this) {
+char* LinkedList_front(Linked_List* this) {//Returns the value at the front of the Linked List
     if (this->head == NULL) {
         //printf("Error! Empty Linked List!");
         return "Empty!";
@@ -149,7 +150,7 @@ char* LinkedList_front(Linked_List* this) {
         return this->head->data;
     }
 }
-char* LinkedList_back(Linked_List* this) {
+char* LinkedList_back(Linked_List* this) {//Returns the value at the end of the Linked List
     if (this->tail == NULL) {
         //printf("Error! Empty Linked List!");
         return "Empty!";
@@ -158,7 +159,7 @@ char* LinkedList_back(Linked_List* this) {
     }
 }
 
-int LinkedList_is_empty(Linked_List* this) {
+int LinkedList_is_empty(Linked_List* this) {//Checks if the Linked List is empty and returns 1 if is 0 if it isn't
     if (this->head == NULL && this->tail == NULL) {
         return 1;
     }
@@ -166,7 +167,7 @@ int LinkedList_is_empty(Linked_List* this) {
         return 0;
     }
 }
-void LinkedList_remove_value(Linked_List* this, const char* value) {
+void LinkedList_remove_value(Linked_List* this, const char* value) {//Removes a value from Linked List
     if (this->head == NULL) {
         printf("Error! Linked List Empty!");
     }
@@ -205,7 +206,7 @@ void LinkedList_remove_value(Linked_List* this, const char* value) {
     }
 }
 
-void LinkedList_reverse(Linked_List* this) {
+void LinkedList_reverse(Linked_List* this) {//Reverses Linked List by flipping the next and previous node pointers
 
     if (this->head == NULL) {
         printf("Error! Empty Linked List!\n");
@@ -224,7 +225,7 @@ void LinkedList_reverse(Linked_List* this) {
     this->head = temp;
 }
 
-size_t LinkedList_size(Linked_List* this) {
+size_t LinkedList_size(Linked_List* this) {//returns the size_t of the Linked List
     Node* currNode = this->head;
     size_t count = 0;
     while (currNode != NULL) {
@@ -234,7 +235,7 @@ size_t LinkedList_size(Linked_List* this) {
     return count;
 }
 
-void LinkedList_output_list(Linked_List* this) {
+void LinkedList_output_list(Linked_List* this) {//sends the contents of the Linked List to stdout
     if (this->head != NULL) {
         Node* currNode = this->head;
         while (currNode != NULL) {
