@@ -13,6 +13,48 @@ Linked_List* LinkedList_Linked_List() {
     return newList;
 }
 
+void LinkedList_Deconstruct(Linked_List* this) {
+    if (this == NULL) return;//In case the object pointer has not yet been initialized
+    if (this->head != NULL) {//copied from clear() to not have output;
+        Node* currNode = this->head;
+        while (currNode != NULL) {
+            Node* nextNode = currNode->next;
+            free(currNode->data);
+            currNode->data = NULL;
+            free(currNode);
+            currNode = nextNode;
+        }
+        this->head = NULL;
+        this->tail = NULL;
+    }
+    else {
+    }
+
+    free(this);
+}
+Linked_List* LinkedList_Copy(Linked_List* this) {
+    Linked_List* newList = NULL;
+    newList = malloc(sizeof(Linked_List));
+    newList->head = NULL;
+    newList->tail = NULL;
+
+    if (this->head != NULL) {
+        Node* currNode = this->head;
+        while (currNode != NULL) {
+            Node* nextNode = currNode->next;
+            //printf("%s ", currNode->data);
+            LinkedList_push_back(newList, strdup(currNode->data));
+            currNode = nextNode;
+        }
+        //printf("\n");
+    }
+    else {
+        printf("Empty\n");
+    }
+
+    return newList;
+}
+
 Node* LinkedList_initializeNode(const char* data, Node* next, Node* previous) {
     Node* tempNode;
     tempNode = malloc(sizeof(Node));

@@ -20,7 +20,9 @@ typedef struct Linked_List {
     Node* tail;
 } Linked_List;
 
-Linked_List* LinkedList_Linked_List();
+Linked_List* LinkedList_Linked_List();//constructor
+void LinkedList_Deconstruct(Linked_List* self);//Deconstructor
+Linked_List* LinkedList_Copy(Linked_List* self);//
 Node* LinkedList_initializeNode(const char* data, Node* next, Node* previous);
 void LinkedList_push_front(Linked_List* this,const char* value);
 void LinkedList_push_back(Linked_List* this,const char* value);

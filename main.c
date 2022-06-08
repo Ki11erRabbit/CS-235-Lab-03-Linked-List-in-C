@@ -20,6 +20,7 @@ int main(int argc, char** argv) {
     char* buff = NULL;
     size_t buffSize = 0;
     Linked_List* list = LinkedList_Linked_List();
+    Linked_List* list2 = NULL;
     while (getline(&buff, &buffSize, readFile)) {
         buff = strtok(buff, "\n");//trims newline character
         //printf("%d", buffSize);
@@ -102,6 +103,15 @@ int main(int argc, char** argv) {
                 printf("Last ");
                 printf("%s\n", LinkedList_back(list));
             }
+            else if (strcmp(token, "Copy") == 0) {
+                printf("Copy ");
+                list2 = LinkedList_Copy(list);
+                printf("\n");
+            }
+            else if (strcmp(token, "PrintCopy") == 0) {
+                printf("PrintList Copy ");
+                LinkedList_output_list(list2);
+            }
             else {
                 break;
             }
@@ -114,9 +124,8 @@ int main(int argc, char** argv) {
         buff = NULL;
     }
 
-    LinkedList_clear(list);
-    free(list);
-
+    LinkedList_Deconstruct(list);
+    LinkedList_Deconstruct(list2);
 
 
     return fclose(readFile);// + fclose(writeFile);
