@@ -10,6 +10,24 @@ Linked_List* LinkedList_Linked_List() {//Constructor for Linked List object
     newList = malloc(sizeof(Linked_List));
     newList->head = NULL;
     newList->tail = NULL;
+
+    newList->deconstruct = LinkedList_Deconstruct;
+    newList->clone = LinkedList_Copy;
+
+    newList->push_front = LinkedList_push_front;
+    newList->push_back = LinkedList_push_back;
+    newList->pop_front = LinkedList_pop_front;
+    newList->pop_back = LinkedList_pop_back;
+
+    newList->front = LinkedList_front;
+    newList->back = LinkedList_back;
+    newList->empty = LinkedList_is_empty;
+    newList->size = LinkedList_size;
+
+    newList->remove = LinkedList_remove_value;
+    newList->reverse = LinkedList_reverse;
+    newList->clear = LinkedList_clear;
+    newList->print = LinkedList_output_list;
     return newList;
 }
 
@@ -35,10 +53,7 @@ void LinkedList_Deconstruct(Linked_List* this) {//Deconstructor for Linked List 
 }
 //copies the data from Linked List this into new Linked List and returns a pointer to it
 Linked_List* LinkedList_Copy(Linked_List* this) {
-    Linked_List* newList = NULL;
-    newList = malloc(sizeof(Linked_List));
-    newList->head = NULL;
-    newList->tail = NULL;
+    Linked_List* newList = LinkedList_Linked_List();
 
     if (this->head != NULL) {
         Node* currNode = this->head;
